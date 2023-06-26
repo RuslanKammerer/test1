@@ -6,13 +6,15 @@ import ui.ArticlePageObject;
 import ui.MyListsPageObject;
 import ui.NavigationUI;
 import ui.SearchPageObject;
+import ui.factories.ArticlePageObjectFactory;
+import ui.factories.SearchPageObjectFactory;
 
 public class MyListsTests extends CoreTestCase {
     @Test
     public void testSaveFirstArticleToList()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         NavigationUI NavigationUi = new NavigationUI(driver);
         MyListsPageObject MyListPageObject = new MyListsPageObject(driver);
 
@@ -35,8 +37,8 @@ public class MyListsTests extends CoreTestCase {
     @Test
     public void testSaveAndDeleteArticlesToLists()
     {
-        SearchPageObject  SearchPageObject = new SearchPageObject(driver);
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        SearchPageObject  SearchPageObject = SearchPageObjectFactory.get(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         NavigationUI NavigationUi = new NavigationUI(driver);
         MyListsPageObject MyListPageObject = new MyListsPageObject(driver);
 

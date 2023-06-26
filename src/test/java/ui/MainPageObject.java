@@ -2,6 +2,7 @@ package ui;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
@@ -84,6 +85,26 @@ public class MainPageObject {
             swipeUpQuick();
             ++already_swipes;
         }
+    }
+    public void swipeUpTillElementAppear(String locator, String err_msg, int max_swipes)
+    {
+        int already_swipes = 0;
+        while (!this.isElementLocatedOnTheScreen(locator))
+        {
+            if (already_swipes > max_swipes)
+            {
+                Assert.assertTrue(err_msg, this.isElementLocatedOnTheScreen(locator));
+            }
+            swipeUpQuick();
+            ++already_swipes;
+        }
+    }
+    public boolean isElementLocatedOnTheScreen(String locator)
+    {
+        int element_location_by_y = this.waitForElementPresent(locator, "cannot find element by locator",
+                        2).getLocation().getY();
+        int screen_size_by_y = driver.manage().window().getSize().getHeight();
+        return element_location_by_y < screen_size_by_y;
     }
     public void swipeElemntToLeft(String locator, String err_msg)
     {

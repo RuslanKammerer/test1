@@ -1,13 +1,17 @@
-package tests.iOS;
+package tests;
 
-import lib.iOSTestCase;
+import lib.CoreTestCase;
+import lib.Platform;
 import org.junit.Test;
 import ui.WelcomePageObject;
 
-public class GetStartedTest extends iOSTestCase {
+public class GetStartedTest extends CoreTestCase {
     @Test
     public void testPassThroughWelcome()
     {
+        if (Platform.getInstance().isAndroid()){
+            return;
+        }
         WelcomePageObject WelcomePageObject = new WelcomePageObject(driver);
         WelcomePageObject.waitForLearnMoreBtn();
         WelcomePageObject.clickSkipBtn();

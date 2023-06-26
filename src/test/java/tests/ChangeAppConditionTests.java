@@ -4,13 +4,15 @@ import lib.CoreTestCase;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import ui.*;
+import ui.factories.ArticlePageObjectFactory;
+import ui.factories.SearchPageObjectFactory;
 
 public class ChangeAppConditionTests extends CoreTestCase {
     @Test
     public void testTitleScreenOrientation()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         NavigationUI NavigationUi = new NavigationUI(driver);
         MyListsPageObject MyListPageObject = new MyListsPageObject(driver);
 
@@ -35,8 +37,8 @@ public class ChangeAppConditionTests extends CoreTestCase {
     public void testArticleCheckandBackgroud()
     {
 
-        SearchPageObject  SearchPageObject = new SearchPageObject(driver);
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        SearchPageObject  SearchPageObject = SearchPageObjectFactory.get(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         MainPageObject MainPageObject = new MainPageObject(driver);
         NavigationUI NavigationUi = new NavigationUI(driver);
         MyListsPageObject MyListPageObject = new MyListsPageObject(driver);

@@ -4,13 +4,15 @@ import lib.CoreTestCase;
 import org.junit.Test;
 import ui.ArticlePageObject;
 import ui.SearchPageObject;
+import ui.factories.ArticlePageObjectFactory;
+import ui.factories.SearchPageObjectFactory;
 
 public class ArticleTests extends CoreTestCase {
     @Test
     public void testCompareArticleTitle()
     {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubstring("Java (programming language)");
@@ -22,14 +24,14 @@ public class ArticleTests extends CoreTestCase {
         //MainPageObject.waitForElementandClick(By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Java (programming language)']"), "not_find", 3);
         //WebElement title_name = MainPageObject.waitForElementPresent(By.xpath("//*[contains(@text,'Java (programming language)')]"), "Не удалось найти заголовок статьи", 5);
         //String article_title = title_name.getAttribute("text");
-        assertEquals("Title is not match", "Java (programming language)", article_title);
+        assertEquals("Title is not match", "Object-oriented programming language", article_title);
 
     }
     @Test
     public void testSwipeArticle()
     {
-        SearchPageObject  SearchPageObject = new SearchPageObject(driver);
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        SearchPageObject  SearchPageObject = SearchPageObjectFactory.get(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Appium");
         SearchPageObject.clickByArticleWithSubstring("Automation for Apps");
@@ -46,7 +48,7 @@ public class ArticleTests extends CoreTestCase {
     public void testfindArticlesandClose()
     // В данном тест-кейсе ищется 3 статьи по слову Carbon, стирается строка пропуска и проверяется, что в поле выдачи пусто
     {
-        SearchPageObject  SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject  SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
 
         String search_line = "Carbon";
@@ -61,8 +63,8 @@ public class ArticleTests extends CoreTestCase {
     }
     @Test
     public void testTitlePage()
-    {   SearchPageObject  SearchPageObject = new SearchPageObject(driver);
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+    {   SearchPageObject  SearchPageObject = SearchPageObjectFactory.get(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
 

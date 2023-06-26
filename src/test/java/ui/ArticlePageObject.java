@@ -1,21 +1,22 @@
 package ui;
 
 import io.appium.java_client.AppiumDriver;
+import lib.Platform;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class ArticlePageObject extends MainPageObject
+abstract public class ArticlePageObject extends MainPageObject
 {
-    private static final String
-            SUB_TITLE = "id:pcs-edit-section-title-description",
-            FOOTER_ELEMENT = "xpath://*[contains(@text,'View article in browser')]",
-            SAVE_BUTTON = "id:org.wikipedia:id/page_save",
-            SNACKBAR_ACTION = "id:org.wikipedia:id/snackbar_action",
-            INPUT_TEXT = "id:org.wikipedia:id/text_input",
-            OK_BUTTON = "id:android:id/button1",
-            NAVIGATE_UP_BTN = "xpath://android.widget.ImageButton[@content-desc='Navigate up']",
-            SAVED_READING_LIST_TMP="xpath://*[contains(@text,'{SAVED_LIST}')]",
-            TEST_ELEMENT_PRESENT = "xpath://*[@resource-id='pcs-edit-section-title-description']";
+    protected static String
+            SUB_TITLE,
+            FOOTER_ELEMENT,
+            SAVE_BUTTON,
+            SNACKBAR_ACTION,
+            INPUT_TEXT,
+            OK_BUTTON,
+            NAVIGATE_UP_BTN,
+            SAVED_READING_LIST_TMP,
+            TEST_ELEMENT_PRESENT;
 
     public ArticlePageObject(AppiumDriver driver)
     {
@@ -32,11 +33,19 @@ public class ArticlePageObject extends MainPageObject
     public String getArticleName()
     {
         WebElement title_element = waitForTitleElement();
-        return title_element.getAttribute("text");
+        if (Platform.getInstance().isAndroid())
+        {return title_element.getAttribute("text");}
+        else {
+            return title_element.getAttribute("name");
+        }
     }
     public void swipeForFooter()
     {
-        this.swipeUpToFindElement(FOOTER_ELEMENT, "Не удалось свайпнуть к нужному эл-ту", 20);
+        if (Platform.getInstance().isAndroid())
+        {this.swipeUpToFindElement(FOOTER_ELEMENT, "Не удалось свайпнуть к нужному эл-ту",
+                20);}
+        else
+        {this.swipeUpTillElementAppear(FOOTER_ELEMENT,"Не удалось свайпнуть к нужному эл-ту", 30);}
     }
     public void addArticleToMyList(String name_of_folder)
     {
