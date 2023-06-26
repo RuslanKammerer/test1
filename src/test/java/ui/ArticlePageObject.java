@@ -7,15 +7,15 @@ import org.openqa.selenium.WebElement;
 public class ArticlePageObject extends MainPageObject
 {
     private static final String
-            SUB_TITLE = "pcs-edit-section-title-description",
-            FOOTER_ELEMENT = "//*[contains(@text,'View article in browser')]",
-            SAVE_BUTTON = "org.wikipedia:id/page_save",
-            SNACKBAR_ACTION = "org.wikipedia:id/snackbar_action",
-            INPUT_TEXT = "org.wikipedia:id/text_input",
-            OK_BUTTON = "android:id/button1",
-            NAVIGATE_UP_BTN = "//android.widget.ImageButton[@content-desc='Navigate up']",
-            SAVED_READING_LIST_TMP="//*[contains(@text,'{SAVED_LIST}')]",
-            TEST_ELEMENT_PRESENT = "//*[@resource-id='pcs-edit-section-title-description']";
+            SUB_TITLE = "id:pcs-edit-section-title-description",
+            FOOTER_ELEMENT = "xpath://*[contains(@text,'View article in browser')]",
+            SAVE_BUTTON = "id:org.wikipedia:id/page_save",
+            SNACKBAR_ACTION = "id:org.wikipedia:id/snackbar_action",
+            INPUT_TEXT = "id:org.wikipedia:id/text_input",
+            OK_BUTTON = "id:android:id/button1",
+            NAVIGATE_UP_BTN = "xpath://android.widget.ImageButton[@content-desc='Navigate up']",
+            SAVED_READING_LIST_TMP="xpath://*[contains(@text,'{SAVED_LIST}')]",
+            TEST_ELEMENT_PRESENT = "xpath://*[@resource-id='pcs-edit-section-title-description']";
 
     public ArticlePageObject(AppiumDriver driver)
     {
@@ -27,7 +27,7 @@ public class ArticlePageObject extends MainPageObject
     }
     public WebElement waitForTitleElement()
     {
-        return this.waitForElementPresent(By.id(SUB_TITLE), "Не удалось найти подзаголовок статьи", 5);
+        return this.waitForElementPresent(SUB_TITLE, "Не удалось найти подзаголовок статьи", 5);
     }
     public String getArticleName()
     {
@@ -36,43 +36,43 @@ public class ArticlePageObject extends MainPageObject
     }
     public void swipeForFooter()
     {
-        this.swipeUpToFindElement(By.xpath(FOOTER_ELEMENT), "Не удалось свайпнуть к нужному эл-ту", 20);
+        this.swipeUpToFindElement(FOOTER_ELEMENT, "Не удалось свайпнуть к нужному эл-ту", 20);
     }
     public void addArticleToMyList(String name_of_folder)
     {
-        this.waitForElementandClick(By.id(SAVE_BUTTON),
+        this.waitForElementandClick(SAVE_BUTTON,
                 "not find save button",
                 2);
-        this.waitForElementandClick(By.id(SNACKBAR_ACTION),
+        this.waitForElementandClick(SNACKBAR_ACTION,
                 "not find save button",
                 2);
 
-        this.waitForElementandSendKeys(By.id(INPUT_TEXT), name_of_folder,
+        this.waitForElementandSendKeys(INPUT_TEXT, name_of_folder,
                 "Не удалось ввести имя папки для сохранения",
                 1);
-       this.waitForElementandClick(By.id(OK_BUTTON),
+       this.waitForElementandClick(OK_BUTTON,
                 "not find OK button",
                 2);
     }
     public void addArticleToSavedList(String saved_list)
     {
         String saved_articles_list = getSavedFolderByName(saved_list);
-        this.waitForElementandClick(By.id(SAVE_BUTTON),
+        this.waitForElementandClick(SAVE_BUTTON,
                 "not find save button",
                 2);
-        this.waitForElementandClick(By.id(SNACKBAR_ACTION),
+        this.waitForElementandClick(SNACKBAR_ACTION,
                 "not find save button",
                 2);
-        this.waitForElementandClick(By.xpath(saved_articles_list), "Не выбрать сохраненный список для сохранения", 2);
+        this.waitForElementandClick(saved_articles_list, "Не выбрать сохраненный список для сохранения", 2);
     }
     public void assertNowElementPresent()
     {
-        this.assertElementPresent(By.xpath(TEST_ELEMENT_PRESENT), "Нужный элемент не найден сразу на странице при прогрузке");
+        this.assertElementPresent(TEST_ELEMENT_PRESENT, "Нужный элемент не найден сразу на странице при прогрузке");
     }
 
     public void closeArticle()
     {
-       this.waitForElementandClick(By.xpath(NAVIGATE_UP_BTN),
+       this.waitForElementandClick(NAVIGATE_UP_BTN,
                 "Не удалось выйти назад",
                 1);
     }

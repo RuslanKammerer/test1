@@ -6,8 +6,8 @@ import org.openqa.selenium.By;
 public class MyListsPageObject extends MainPageObject
 {
     public static final String
-            FOLDER_BY_NAME_TEMPL = "//*[contains(@text,'{FOLDER_NAME}')]",
-            ARTICLE_BY_TITLE_TEMPL= "//*[@text='{TITLE}']";
+            FOLDER_BY_NAME_TEMPL = "xpath://*[contains(@text,'{FOLDER_NAME}')]",
+            ARTICLE_BY_TITLE_TEMPL= "xpath://*[@text='{TITLE}']";
     public MyListsPageObject(AppiumDriver driver)
     {
         super(driver);
@@ -23,7 +23,7 @@ public class MyListsPageObject extends MainPageObject
     public void openFolderByName(String name_of_folder)
     {
         String folder_name_xpath = getFolderXpathByName(name_of_folder);
-        this.waitForElementandClick(By.xpath(folder_name_xpath),
+        this.waitForElementandClick(folder_name_xpath,
                 "Не удалось найти сохраненный список статей по имени" + name_of_folder,
                 1);
     }
@@ -31,18 +31,18 @@ public class MyListsPageObject extends MainPageObject
     {
         String article_xpath = getsSaveArticleXpathByTitle(article_title);
         this.waitForArticleToAppearByTitle(article_title);
-        this.swipeElemntToLeft(By.xpath(article_xpath),
+        this.swipeElemntToLeft(article_xpath,
                 "Не удалось найти статью для удаления");
         this.waitForArticleDissapearByTitle(article_title);
     }
     public void waitForArticleDissapearByTitle(String article_title)
     {
         String article_xpath = getsSaveArticleXpathByTitle(article_title);
-        this.waitForElementNotPresent(By.xpath(article_xpath), "Статья еще на месте" + article_title, 2);
+        this.waitForElementNotPresent(article_xpath, "Статья еще на месте" + article_title, 2);
     }
     public void waitForArticleToAppearByTitle(String article_title)
     {
         String article_xpath = getsSaveArticleXpathByTitle(article_title);
-        this.waitForElementPresent(By.xpath(article_xpath), "Не могу найти сохраненную статью" + article_title, 2);
+        this.waitForElementPresent(article_xpath, "Не могу найти сохраненную статью" + article_title, 2);
     }
 }

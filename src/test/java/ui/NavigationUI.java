@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 
 public class NavigationUI extends MainPageObject {
     private static final String
-            NAV_TAB_READING_LISTS = "org.wikipedia:id/nav_tab_reading_lists";
+            NAV_TAB_READING_LISTS = "id:org.wikipedia:id/nav_tab_reading_lists";
 
     public NavigationUI(AppiumDriver driver)
     {
@@ -13,7 +13,7 @@ public class NavigationUI extends MainPageObject {
     }
     public void clickToMyLists()
     {
-        this.waitForElementandClick(By.id(NAV_TAB_READING_LISTS),
+        this.waitForElementandClick(NAV_TAB_READING_LISTS,
                 "not find navigation button",
                 2);
     }

@@ -49,7 +49,7 @@ public class ChangeAppConditionTests extends CoreTestCase {
         ArticlePageObject.waitForTitleElement();
 
         this.backgroundApp(2);
-        MainPageObject.waitForElementPresent(By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Java (programming language)']"),
+        MainPageObject.waitForElementPresent("xpath://*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Java (programming language)']",
                 "not_find_article_after_exit_from_background",
                 3);
         ArticlePageObject.waitForTitleElement();
