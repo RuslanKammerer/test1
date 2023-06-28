@@ -96,4 +96,80 @@ public class MyListsTests extends CoreTestCase {
 
 
     }
+    @Test
+    public void testSaveAndDeleteArticlesUniversal()
+    {
+        SearchPageObject  SearchPageObject = SearchPageObjectFactory.get(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
+        NavigationUI NavigationUi = NavigationUIFactory.get(driver);
+        MyListsPageObject MyListPageObject = MyListsPageObjectFactory.get(driver);
+
+        String seacrh_line = "Java";
+        String article_1 = "Java (programming language)";
+        String article_2 = "Island in Indonesia";
+
+        if (Platform.getInstance().isAndroid())
+        {
+            SearchPageObject.initSearchInput();
+            SearchPageObject.typeSearchLine(seacrh_line);
+            SearchPageObject.clickByArticleWithSubstring(article_1);
+            ArticlePageObject.waitForTitleElement();
+            String article_title_1 = ArticlePageObject.getArticleName();
+
+            ArticlePageObject.addArticleToMyList(name_of_folder);
+            ArticlePageObject.closeArticle();
+
+            SearchPageObject.clickByArticleWithSubstring(article_2);
+            ArticlePageObject.waitForTitleElement();
+            String article_title_2 = ArticlePageObject.getArticleName();
+
+            ArticlePageObject.addArticleToSavedList(name_of_folder);
+            ArticlePageObject.closeArticle();
+            ArticlePageObject.closeArticle();
+
+            NavigationUi.clickToMyLists();
+
+            MyListPageObject.openFolderByName(name_of_folder);
+            MyListPageObject.swipeByArticleToDelete(article_title_1);
+
+            SearchPageObject.clickByArticleWithSubstringInSavedList(article_2);
+            String check_article = ArticlePageObject.getArticleName();
+            assertEquals("Заголовки статей не совпадают", article_title_2, check_article);
+        }
+        if (Platform.getInstance().isMW())
+        {
+            SearchPageObject.initSearchInput();
+            SearchPageObject.typeSearchLine(seacrh_line);
+            SearchPageObject.clickByArticleWithSubstring(article_1);
+            ArticlePageObject.waitForTitleElement();
+            String article_title_1 = ArticlePageObject.getArticleName();
+
+            AutharizationPageObject Auth = new AutharizationPageObject(driver);
+            Auth.clickAuthButton();
+            Auth.enterLoginData(login, password);
+            Auth.submitForm();
+
+            ArticlePageObject.waitForTitleElement();
+            assertEquals("We are not the same page after login", article_title_1, ArticlePageObject.getArticleName());
+
+            ArticlePageObject.addArticleToMySave();
+
+            SearchPageObject.initSearchInput();
+            SearchPageObject.typeSearchLine(seacrh_line);
+            SearchPageObject.clickByArticleWithSubstring(article_2);
+            ArticlePageObject.waitForTitleElement();
+            String article_title_2 = ArticlePageObject.getArticleName();
+
+            ArticlePageObject.addArticleToMySave();
+
+            NavigationUi.openNavigation();
+            NavigationUi.clickToMyLists();
+
+            MyListPageObject.swipeByArticleToDelete(article_title_1);
+            driver.navigate().refresh();
+
+            String article_check = ArticlePageObject.getArticleName();
+            assertEquals("Сохраненная статья не совпадает с ожидаемой", article_check, article_title_2);
+        }
+    }
 }

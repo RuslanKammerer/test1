@@ -1,15 +1,13 @@
 package ui;
 
-import io.appium.java_client.AppiumDriver;
 import lib.Platform;
-import org.openqa.selenium.By;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class NavigationUI extends MainPageObject {
     protected static String
             NAV_TAB_READING_LISTS,
             OPEN_NAVIGATION,
-            NAV_TAB_WATHLIST;
+            NAV_TAB_WATCHLIST;
 
 
     public NavigationUI(RemoteWebDriver driver)
@@ -20,7 +18,7 @@ abstract public class NavigationUI extends MainPageObject {
     {
         if (Platform.getInstance().isMW()) {
             this.tryClickElementWithFewAttempts(
-                    OPEN_NAVIGATION,
+                    NAV_TAB_WATCHLIST,
                     "Cannot find navigation button to My list",
                     5
             );

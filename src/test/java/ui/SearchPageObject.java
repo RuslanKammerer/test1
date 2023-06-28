@@ -1,6 +1,7 @@
 package ui;
 
 import io.appium.java_client.AppiumDriver;
+import lib.Platform;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -15,7 +16,9 @@ abstract public class SearchPageObject extends MainPageObject
             SEARCH_RESULT_BY_SUBSTRING_TPL,
             SEARCH_RESULT_BY_SAVED_SUBSTRING_TPL,
             SEARCH_RESULT_ELEMENT,
-            EMPTY_SEARCH_RES;
+            EMPTY_SEARCH_RES,
+             SEARCH_INIT_ELEMENT_MW;
+
     public SearchPageObject(RemoteWebDriver driver)
     {
         super(driver);
@@ -32,9 +35,17 @@ abstract public class SearchPageObject extends MainPageObject
     /* Template method */
     public void initSearchInput()
     {
-        this.waitForElementandClick(SKIP_BUTTON, "Не удалось найти кнопку skip", 1);
-        this.waitForElementPresent(SEARCH_INIT_ELEMENT, "Cannot find search input after clicking search init element");
-        this.waitForElementandClick(SEARCH_INIT_ELEMENT, "Cannot find and click search init element", 2);
+        if (Platform.getInstance().isAndroid())
+        {
+            this.waitForElementandClick(SKIP_BUTTON, "Не удалось найти кнопку skip", 1);
+            this.waitForElementPresent(SEARCH_INIT_ELEMENT, "Cannot find search input after clicking search init element");
+            this.waitForElementandClick(SEARCH_INIT_ELEMENT, "Cannot find and click search init element", 2);
+        }
+        if (Platform.getInstance().isMW())
+        {
+            this.waitForElementandClick(SEARCH_INIT_ELEMENT, "Cannot find seacrh button in mw", 2);
+        }
+
     }
     public void waitForCancelBtnAppear()
     {

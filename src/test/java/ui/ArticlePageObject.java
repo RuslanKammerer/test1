@@ -117,5 +117,9 @@ abstract public class ArticlePageObject extends MainPageObject
             System.out.println("Method closeArticle does not support on platform" + Platform.getInstance().getPlatformVar());
         }
     }
+    public void clickArticleNameInSavedList(String locator, String err_msg, int time_sec)
+    {
+        this.waitForElementandClick(locator, err_msg, time_sec);
+    }
 
 }
