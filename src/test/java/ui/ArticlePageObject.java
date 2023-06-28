@@ -1,6 +1,7 @@
 package ui;
 
 import io.appium.java_client.AppiumDriver;
+import io.qameta.allure.Step;
 import lib.Platform;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -24,17 +25,21 @@ abstract public class ArticlePageObject extends MainPageObject
     {
         super(driver);
     }
+    @Step("getSavedFolderByName")
     private static String getSavedFolderByName(String name_of_folder)
     {
         return SAVED_READING_LIST_TMP.replace("{SAVED_LIST}", name_of_folder);
     }
+    @Step("waitForTitleElement")
     public WebElement waitForTitleElement()
     {
         return this.waitForElementPresent(SUB_TITLE, "Не удалось найти подзаголовок статьи", 5);
     }
+    @Step("getArticleName")
     public String getArticleName()
     {
         WebElement title_element = waitForTitleElement();
+        //screenshot(this.takeScreenshot("article_title"));
         if (Platform.getInstance().isAndroid())
         {return title_element.getAttribute("text");}
         else if (Platform.getInstance().isIOS()){
@@ -45,6 +50,7 @@ abstract public class ArticlePageObject extends MainPageObject
             return title_element.getText();
         }
     }
+    @Step("swipeForFooter")
     public void swipeForFooter()
     {
         if (Platform.getInstance().isAndroid())
@@ -57,6 +63,7 @@ abstract public class ArticlePageObject extends MainPageObject
             this.scrollWebPageTillElementNotVisible(FOOTER_ELEMENT,"cannt find the end of article", 40);
         }
     }
+    @Step("addArticleToMyList")
     public void addArticleToMyList(String name_of_folder)
     {
         this.waitForElementandClick(SAVE_BUTTON,
@@ -73,6 +80,7 @@ abstract public class ArticlePageObject extends MainPageObject
                 "not find OK button",
                 2);
     }
+    @Step("addArticleToSavedList")
     public void addArticleToSavedList(String saved_list)
     {
         String saved_articles_list = getSavedFolderByName(saved_list);
@@ -84,15 +92,17 @@ abstract public class ArticlePageObject extends MainPageObject
                 2);
         this.waitForElementandClick(saved_articles_list, "Не выбрать сохраненный список для сохранения", 2);
     }
+    @Step("assertNowElementPresent")
     public void assertNowElementPresent()
     {
         this.assertElementPresent(TEST_ELEMENT_PRESENT, "Нужный элемент не найден сразу на странице при прогрузке");
     }
+    @Step("addArticleToMySave")
     public void addArticleToMySave()
     {
         this.waitForElementandClick(SAVE_BUTTON, "cannt find save btn", 2);
     }
-
+    @Step("removeArticleFromSavedIfItAdded")
     public void removeArticleFromSavedIfItAdded()
     {
         if (this.isElementPresent(OPTION_REMOVE_FROM_MY_LIST_BTN))
@@ -101,6 +111,7 @@ abstract public class ArticlePageObject extends MainPageObject
             this.waitForElementPresent(SAVE_BUTTON, "cannot find save bitton to lists after removing it");
         }
     }
+    @Step("closeArticle")
     public void closeArticle()
     {
         if (Platform.getInstance().isIOS()) {
@@ -117,6 +128,7 @@ abstract public class ArticlePageObject extends MainPageObject
             System.out.println("Method closeArticle does not support on platform" + Platform.getInstance().getPlatformVar());
         }
     }
+    @Step("clickArticleNameInSavedList")
     public void clickArticleNameInSavedList(String locator, String err_msg, int time_sec)
     {
         this.waitForElementandClick(locator, err_msg, time_sec);

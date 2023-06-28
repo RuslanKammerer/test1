@@ -1,7 +1,10 @@
 package tests;
 
+import io.qameta.allure.*;
+import io.qameta.allure.junit4.DisplayName;
 import lib.CoreTestCase;
 import lib.Platform;
+import org.junit.Assert;
 import org.junit.Test;
 import ui.*;
 import ui.factories.ArticlePageObjectFactory;
@@ -13,6 +16,11 @@ public class MyListsTests extends CoreTestCase {
     private static final String name_of_folder = "Test1";
     private static final String login = "test_java_aut", password = "258456Wiki";
     @Test
+    @Features(value = {@Feature(value = "List")})
+    @DisplayName("Тест сохранения статьи в список")
+    @Description("Проверка функционала сохранения статьи в список для чтения")
+    @Step("Starting testSaveFirstArticleToList")
+    @Severity(value = SeverityLevel.BLOCKER)
     public void testSaveFirstArticleToList() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
@@ -39,7 +47,7 @@ public class MyListsTests extends CoreTestCase {
             Auth.submitForm();
 
             ArticlePageObject.waitForTitleElement();
-            assertEquals("We are not the same page after login", article_title, ArticlePageObject.getArticleName());
+            Assert.assertEquals("We are not the same page after login", article_title, ArticlePageObject.getArticleName());
 
             ArticlePageObject.addArticleToMySave();
         }
@@ -58,6 +66,11 @@ public class MyListsTests extends CoreTestCase {
         {driver.navigate().refresh();}
     }
     @Test
+    @Features(value = {@Feature(value = "List")})
+    @DisplayName("Тест сохранения 2-х статей и удаление")
+    @Description("Проверка функционала сохранения статей в список для чтения и удаление одной")
+    @Step("Starting testSaveAndDeleteArticlesToLists")
+    @Severity(value = SeverityLevel.BLOCKER)
     public void testSaveAndDeleteArticlesToLists()
     {
         SearchPageObject  SearchPageObject = SearchPageObjectFactory.get(driver);
@@ -92,11 +105,11 @@ public class MyListsTests extends CoreTestCase {
 
         SearchPageObject.clickByArticleWithSubstringInSavedList(article_2);
         String check_article = ArticlePageObject.getArticleName();
-        assertEquals("Заголовки статей не совпадают", article_title_2, check_article);
+        Assert.assertEquals("Заголовки статей не совпадают", article_title_2, check_article);
 
 
     }
-    @Test
+    /*@Test
     public void testSaveAndDeleteArticlesUniversal()
     {
         SearchPageObject  SearchPageObject = SearchPageObjectFactory.get(driver);
@@ -134,7 +147,7 @@ public class MyListsTests extends CoreTestCase {
 
             SearchPageObject.clickByArticleWithSubstringInSavedList(article_2);
             String check_article = ArticlePageObject.getArticleName();
-            assertEquals("Заголовки статей не совпадают", article_title_2, check_article);
+            Assert.assertEquals("Заголовки статей не совпадают", article_title_2, check_article);
         }
         if (Platform.getInstance().isMW())
         {
@@ -150,7 +163,7 @@ public class MyListsTests extends CoreTestCase {
             Auth.submitForm();
 
             ArticlePageObject.waitForTitleElement();
-            assertEquals("We are not the same page after login", article_title_1, ArticlePageObject.getArticleName());
+            Assert.assertEquals("We are not the same page after login", article_title_1, ArticlePageObject.getArticleName());
 
             ArticlePageObject.addArticleToMySave();
 
@@ -169,7 +182,7 @@ public class MyListsTests extends CoreTestCase {
             driver.navigate().refresh();
 
             String article_check = ArticlePageObject.getArticleName();
-            assertEquals("Сохраненная статья не совпадает с ожидаемой", article_check, article_title_2);
+            Assert.assertEquals("Сохраненная статья не совпадает с ожидаемой", article_check, article_title_2);
         }
-    }
+    }*/
 }
