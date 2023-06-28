@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import ui.*;
 import ui.factories.ArticlePageObjectFactory;
+import ui.factories.MyListsPageObjectFactory;
+import ui.factories.NavigationUIFactory;
 import ui.factories.SearchPageObjectFactory;
 
 public class ChangeAppConditionTests extends CoreTestCase {
@@ -13,8 +15,8 @@ public class ChangeAppConditionTests extends CoreTestCase {
     {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
-        NavigationUI NavigationUi = new NavigationUI(driver);
-        MyListsPageObject MyListPageObject = new MyListsPageObject(driver);
+        NavigationUI NavigationUi = NavigationUIFactory.get(driver);
+        MyListsPageObject MyListPageObject = MyListsPageObjectFactory.get(driver);;
 
         String search_line ="Java";
 
@@ -40,8 +42,8 @@ public class ChangeAppConditionTests extends CoreTestCase {
         SearchPageObject  SearchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         MainPageObject MainPageObject = new MainPageObject(driver);
-        NavigationUI NavigationUi = new NavigationUI(driver);
-        MyListsPageObject MyListPageObject = new MyListsPageObject(driver);
+        NavigationUI NavigationUi = NavigationUIFactory.get(driver);
+        MyListsPageObject MyListPageObject = MyListsPageObjectFactory.get(driver);
 
         String search_line ="Java";
 

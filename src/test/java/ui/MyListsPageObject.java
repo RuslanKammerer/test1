@@ -1,13 +1,13 @@
 package ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
+import lib.Platform;
 
-public class MyListsPageObject extends MainPageObject
+abstract public class MyListsPageObject extends MainPageObject
 {
-    public static final String
-            FOLDER_BY_NAME_TEMPL = "xpath://*[contains(@text,'{FOLDER_NAME}')]",
-            ARTICLE_BY_TITLE_TEMPL= "xpath://*[@text='{TITLE}']";
+    protected static String
+            FOLDER_BY_NAME_TEMPL,
+            ARTICLE_BY_TITLE_TEMPL;
     public MyListsPageObject(AppiumDriver driver)
     {
         super(driver);
@@ -31,8 +31,12 @@ public class MyListsPageObject extends MainPageObject
     {
         String article_xpath = getsSaveArticleXpathByTitle(article_title);
         this.waitForArticleToAppearByTitle(article_title);
-        this.swipeElemntToLeft(article_xpath,
+        this.swipeElementToLeft(article_xpath,
                 "Не удалось найти статью для удаления");
+        if (Platform.getInstance().isIOS())
+        {
+            this.clickElementToTheRightUpperCorner(article_xpath, "cannot_click_to_delete_articel");
+        }
         this.waitForArticleDissapearByTitle(article_title);
     }
     public void waitForArticleDissapearByTitle(String article_title)

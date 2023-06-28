@@ -3,9 +3,9 @@ package ui;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
-public class NavigationUI extends MainPageObject {
-    private static final String
-            NAV_TAB_READING_LISTS = "id:org.wikipedia:id/nav_tab_reading_lists";
+abstract public class NavigationUI extends MainPageObject {
+    protected static String
+            NAV_TAB_READING_LISTS;
 
     public NavigationUI(AppiumDriver driver)
     {

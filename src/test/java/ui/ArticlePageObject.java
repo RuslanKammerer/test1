@@ -78,6 +78,10 @@ abstract public class ArticlePageObject extends MainPageObject
     {
         this.assertElementPresent(TEST_ELEMENT_PRESENT, "Нужный элемент не найден сразу на странице при прогрузке");
     }
+    public void addArticleToMySave()
+    {
+        this.waitForElementandClick(SAVE_BUTTON, "cannt find save btn", 2);
+    }
 
     public void closeArticle()
     {
@@ -85,4 +89,5 @@ abstract public class ArticlePageObject extends MainPageObject
                 "Не удалось выйти назад",
                 1);
     }
+
 }

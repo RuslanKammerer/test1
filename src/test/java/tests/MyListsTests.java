@@ -1,37 +1,47 @@
 package tests;
 
 import lib.CoreTestCase;
+import lib.Platform;
 import org.junit.Test;
 import ui.ArticlePageObject;
 import ui.MyListsPageObject;
 import ui.NavigationUI;
 import ui.SearchPageObject;
 import ui.factories.ArticlePageObjectFactory;
+import ui.factories.MyListsPageObjectFactory;
+import ui.factories.NavigationUIFactory;
 import ui.factories.SearchPageObjectFactory;
 
 public class MyListsTests extends CoreTestCase {
+    private static final String name_of_folder = "Test1";
     @Test
-    public void testSaveFirstArticleToList()
-    {
+    public void testSaveFirstArticleToList() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
-        NavigationUI NavigationUi = new NavigationUI(driver);
-        MyListsPageObject MyListPageObject = new MyListsPageObject(driver);
+        NavigationUI NavigationUi = NavigationUIFactory.get(driver);
+        MyListsPageObject MyListPageObject = MyListsPageObjectFactory.get(driver);
 
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubstring("Java (programming language)");
         ArticlePageObject.waitForTitleElement();
         String article_title = ArticlePageObject.getArticleName();
-        String name_of_folder = "Test1";
 
-        ArticlePageObject.addArticleToMyList(name_of_folder);
+        if (Platform.getInstance().isAndroid()) {
+            ArticlePageObject.addArticleToMyList(name_of_folder);
+        } else
+        {
+            ArticlePageObject.addArticleToMySave();
+        }
         ArticlePageObject.closeArticle();
         ArticlePageObject.closeArticle();
 
         NavigationUi.clickToMyLists();
+        if (Platform.getInstance().isAndroid())
+        {
+            MyListPageObject.openFolderByName(name_of_folder);
+        }
 
-        MyListPageObject.openFolderByName(name_of_folder);
         MyListPageObject.swipeByArticleToDelete(article_title);
     }
     @Test
@@ -39,8 +49,8 @@ public class MyListsTests extends CoreTestCase {
     {
         SearchPageObject  SearchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
-        NavigationUI NavigationUi = new NavigationUI(driver);
-        MyListsPageObject MyListPageObject = new MyListsPageObject(driver);
+        NavigationUI NavigationUi = NavigationUIFactory.get(driver);
+        MyListsPageObject MyListPageObject = MyListsPageObjectFactory.get(driver);
 
         String seacrh_line = "Java";
         String article_1 = "Java (programming language)";
@@ -50,7 +60,6 @@ public class MyListsTests extends CoreTestCase {
         SearchPageObject.clickByArticleWithSubstring(article_1);
         ArticlePageObject.waitForTitleElement();
         String article_title_1 = ArticlePageObject.getArticleName();
-        String name_of_folder = "Test1";
 
         ArticlePageObject.addArticleToMyList(name_of_folder);
         ArticlePageObject.closeArticle();
