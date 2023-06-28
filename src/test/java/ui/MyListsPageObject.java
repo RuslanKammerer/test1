@@ -2,13 +2,15 @@ package ui;
 
 import io.appium.java_client.AppiumDriver;
 import lib.Platform;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class MyListsPageObject extends MainPageObject
 {
     protected static String
             FOLDER_BY_NAME_TEMPL,
-            ARTICLE_BY_TITLE_TEMPL;
-    public MyListsPageObject(AppiumDriver driver)
+            ARTICLE_BY_TITLE_TEMPL,
+            REMOVE_FROM_SAVED_BTN;
+    public MyListsPageObject(RemoteWebDriver driver)
     {
         super(driver);
     }
@@ -19,6 +21,10 @@ abstract public class MyListsPageObject extends MainPageObject
     private static String getsSaveArticleXpathByTitle(String article_title)
     {
         return ARTICLE_BY_TITLE_TEMPL.replace("{TITLE}", article_title);
+    }
+    private static String getRemoveButtonTitle(String article_title)
+    {
+        return REMOVE_FROM_SAVED_BTN.replace("{TITLE}", article_title);
     }
     public void openFolderByName(String name_of_folder)
     {
@@ -33,6 +39,11 @@ abstract public class MyListsPageObject extends MainPageObject
         this.waitForArticleToAppearByTitle(article_title);
         this.swipeElementToLeft(article_xpath,
                 "Не удалось найти статью для удаления");
+        if (Platform.getInstance().isMW())
+        {
+            String remove_locator = getRemoveButtonTitle(article_title);
+            this.waitForElementandClick(remove_locator, "cannot click btn to remove article from saved", 10);
+        }
         if (Platform.getInstance().isIOS())
         {
             this.clickElementToTheRightUpperCorner(article_xpath, "cannot_click_to_delete_articel");

@@ -24,6 +24,7 @@ public class CoreTestCase extends TestCase
         driver = Platform.getInstance().getDriver();
         this.rotateScreenPortrait();
         this.skipWelcomePageForIOSApp();
+        this.openWikiWebPageForMobileWeb();
     }
     @Override
     protected void tearDown() throws Exception
@@ -68,6 +69,17 @@ public class CoreTestCase extends TestCase
             System.out.println("Method backgroundApp does nothing for" + Platform.getInstance().getPlatformVar());
         }
 
+    }
+    protected void openWikiWebPageForMobileWeb()
+    {
+        if(Platform.getInstance().isMW())
+        {
+            driver.get("https://en.m.wikipedia.org");
+        }
+        else
+        {
+            System.out.println("Method openWikiWebPageForMobileWeb does nothing for" + Platform.getInstance().getPlatformVar());
+        }
     }
     private void skipWelcomePageForIOSApp()
     {

@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import lib.Platform;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class ArticlePageObject extends MainPageObject
 {
@@ -16,9 +17,10 @@ abstract public class ArticlePageObject extends MainPageObject
             OK_BUTTON,
             NAVIGATE_UP_BTN,
             SAVED_READING_LIST_TMP,
-            TEST_ELEMENT_PRESENT;
+            TEST_ELEMENT_PRESENT,
+            OPTION_REMOVE_FROM_MY_LIST_BTN;
 
-    public ArticlePageObject(AppiumDriver driver)
+    public ArticlePageObject(RemoteWebDriver driver)
     {
         super(driver);
     }
@@ -35,8 +37,12 @@ abstract public class ArticlePageObject extends MainPageObject
         WebElement title_element = waitForTitleElement();
         if (Platform.getInstance().isAndroid())
         {return title_element.getAttribute("text");}
-        else {
+        else if (Platform.getInstance().isIOS()){
             return title_element.getAttribute("name");
+        }
+        else
+        {
+            return title_element.getText();
         }
     }
     public void swipeForFooter()
@@ -44,8 +50,12 @@ abstract public class ArticlePageObject extends MainPageObject
         if (Platform.getInstance().isAndroid())
         {this.swipeUpToFindElement(FOOTER_ELEMENT, "Не удалось свайпнуть к нужному эл-ту",
                 20);}
-        else
+        else if (Platform.getInstance().isIOS())
         {this.swipeUpTillElementAppear(FOOTER_ELEMENT,"Не удалось свайпнуть к нужному эл-ту", 30);}
+        else
+        {
+            this.scrollWebPageTillElementNotVisible(FOOTER_ELEMENT,"cannt find the end of article", 40);
+        }
     }
     public void addArticleToMyList(String name_of_folder)
     {
@@ -83,11 +93,29 @@ abstract public class ArticlePageObject extends MainPageObject
         this.waitForElementandClick(SAVE_BUTTON, "cannt find save btn", 2);
     }
 
+    public void removeArticleFromSavedIfItAdded()
+    {
+        if (this.isElementPresent(OPTION_REMOVE_FROM_MY_LIST_BTN))
+        {
+            this.waitForElementandClick(OPTION_REMOVE_FROM_MY_LIST_BTN, "cannot clikc btn to remove article from saved", 2);
+            this.waitForElementPresent(SAVE_BUTTON, "cannot find save bitton to lists after removing it");
+        }
+    }
     public void closeArticle()
     {
-       this.waitForElementandClick(NAVIGATE_UP_BTN,
-                "Не удалось выйти назад",
-                1);
+        if (Platform.getInstance().isIOS()) {
+            this.waitForElementandClick(NAVIGATE_UP_BTN,
+                    "Не удалось выйти назад",
+                    1);
+        } else if (Platform.getInstance().isAndroid()) {
+            this.waitForElementandClick(NAVIGATE_UP_BTN,
+                    "Не удалось выйти назад",
+                    1);
+        }
+        else
+        {
+            System.out.println("Method closeArticle does not support on platform" + Platform.getInstance().getPlatformVar());
+        }
     }
 
 }

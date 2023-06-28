@@ -1,6 +1,7 @@
 package ui.ios;
 
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ui.SearchPageObject;
 
 public class IOSSearchPageObject extends SearchPageObject {
@@ -14,7 +15,7 @@ public class IOSSearchPageObject extends SearchPageObject {
         SEARCH_RESULT_ELEMENT= "xpath://*[@resource-id='org.wikipedia:id/search_results_list']//*[@resource-id='org.wikipedia:id/page_list_item_title']";
         EMPTY_SEARCH_RES = "xpath://*[contains(@text, 'No results')]";
     }
-    public IOSSearchPageObject(AppiumDriver driver)
+    public IOSSearchPageObject(RemoteWebDriver driver)
     {
         super(driver);
     }

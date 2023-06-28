@@ -18,12 +18,6 @@ public class ArticleTests extends CoreTestCase {
         SearchPageObject.clickByArticleWithSubstring("Java (programming language)");
         ArticlePageObject.waitForTitleElement();
         String article_title = ArticlePageObject.getArticleName();
-        //MainPageObject.waitForElementandClick(By.id("org.wikipedia:id/fragment_onboarding_skip_button"), "не найдена кнопка", 1);
-        //MainPageObject.waitForElementandClick(By.id("org.wikipedia:id/search_container"), "не удалось найти id поля поиска", 2);
-        //MainPageObject.waitForElementandSendKeys(By.xpath("//*[contains(@text,'Search Wikipedia')]"), "Java", "Не удалось найти java", 1);
-        //MainPageObject.waitForElementandClick(By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Java (programming language)']"), "not_find", 3);
-        //WebElement title_name = MainPageObject.waitForElementPresent(By.xpath("//*[contains(@text,'Java (programming language)')]"), "Не удалось найти заголовок статьи", 5);
-        //String article_title = title_name.getAttribute("text");
         assertEquals("Title is not match", "Object-oriented programming language", article_title);
 
     }

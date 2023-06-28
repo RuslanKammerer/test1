@@ -1,6 +1,7 @@
 package ui.ios;
 
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ui.ArticlePageObject;
 
 public class IOSArticlePageObject extends ArticlePageObject {
@@ -15,7 +16,7 @@ public class IOSArticlePageObject extends ArticlePageObject {
         SAVED_READING_LIST_TMP = "xpath://*[contains(@text,'{SAVED_LIST}')]";
         TEST_ELEMENT_PRESENT = "xpath://*[@resource-id='pcs-edit-section-title-description']";
     }
-    public IOSArticlePageObject(AppiumDriver driver)
+    public IOSArticlePageObject(RemoteWebDriver driver)
     {
         super(driver);
     }

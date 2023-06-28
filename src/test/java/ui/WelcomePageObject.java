@@ -2,13 +2,14 @@ package ui;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class WelcomePageObject extends MainPageObject{
     private static final String
     LEARN_MORE_BTN="",
     SKIP_BTN_IOS="",
     GET_STARTED_BTN="";
-    public WelcomePageObject(AppiumDriver driver)
+    public WelcomePageObject(RemoteWebDriver driver)
     {
         super(driver);
     }

@@ -4,11 +4,15 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.omg.CORBA.PRIVATE_MEMBER;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import sun.security.krb5.internal.crypto.Des;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Platform {
     private static final String PLATFORM_IOS = "ios",
@@ -35,6 +39,10 @@ public class Platform {
         else if (this.isIOS())
         {
             return new IOSDriver(URL, this.getIOSDesiredCapabilities());
+        }
+        else if (this.isMW())
+        {
+            return new ChromeDriver(this.getMWChromeOptions());
         }
         else
         {
@@ -71,6 +79,21 @@ public class Platform {
         capabilities.setCapability("deviceName","iPhone SE");
         capabilities.setCapability("platformVersion","11.3");
         return capabilities;
+    }
+    private ChromeOptions getMWChromeOptions()
+    {
+        Map<String, Object> deviceMetrcis = new HashMap<String, Object>();
+        deviceMetrcis.put("width", 360);
+        deviceMetrcis.put("height", 640);
+        deviceMetrcis.put("pixelRatio", 3.0);
+
+        Map<String, Object > mobileEmulation = new HashMap<String, Object>();
+        mobileEmulation.put("deviceMetrics", deviceMetrcis);
+        mobileEmulation.put("userAgent", "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19");
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("window-size = 340, 640");
+        chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
+        return chromeOptions;
     }
     private boolean isPlatform(String my_platform)
     {

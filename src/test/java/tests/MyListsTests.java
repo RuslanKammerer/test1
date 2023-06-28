@@ -3,10 +3,7 @@ package tests;
 import lib.CoreTestCase;
 import lib.Platform;
 import org.junit.Test;
-import ui.ArticlePageObject;
-import ui.MyListsPageObject;
-import ui.NavigationUI;
-import ui.SearchPageObject;
+import ui.*;
 import ui.factories.ArticlePageObjectFactory;
 import ui.factories.MyListsPageObjectFactory;
 import ui.factories.NavigationUIFactory;
@@ -14,6 +11,7 @@ import ui.factories.SearchPageObjectFactory;
 
 public class MyListsTests extends CoreTestCase {
     private static final String name_of_folder = "Test1";
+    private static final String login = "test_java_aut", password = "258456Wiki";
     @Test
     public void testSaveFirstArticleToList() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
@@ -33,16 +31,31 @@ public class MyListsTests extends CoreTestCase {
         {
             ArticlePageObject.addArticleToMySave();
         }
+        if (Platform.getInstance().isMW())
+        {
+            AutharizationPageObject Auth = new AutharizationPageObject(driver);
+            Auth.clickAuthButton();
+            Auth.enterLoginData(login, password);
+            Auth.submitForm();
+
+            ArticlePageObject.waitForTitleElement();
+            assertEquals("We are not the same page after login", article_title, ArticlePageObject.getArticleName());
+
+            ArticlePageObject.addArticleToMySave();
+        }
         ArticlePageObject.closeArticle();
         ArticlePageObject.closeArticle();
+
+        NavigationUi.openNavigation();
 
         NavigationUi.clickToMyLists();
         if (Platform.getInstance().isAndroid())
         {
             MyListPageObject.openFolderByName(name_of_folder);
+            MyListPageObject.swipeByArticleToDelete(article_title);
         }
-
-        MyListPageObject.swipeByArticleToDelete(article_title);
+        if (Platform.getInstance().isMW())
+        {driver.navigate().refresh();}
     }
     @Test
     public void testSaveAndDeleteArticlesToLists()

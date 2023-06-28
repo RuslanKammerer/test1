@@ -1,6 +1,7 @@
 package tests;
 
 import lib.CoreTestCase;
+import lib.Platform;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import ui.*;
@@ -13,6 +14,10 @@ public class ChangeAppConditionTests extends CoreTestCase {
     @Test
     public void testTitleScreenOrientation()
     {
+        if (Platform.getInstance().isMW())
+        {
+            return;
+        }
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         NavigationUI NavigationUi = NavigationUIFactory.get(driver);
@@ -39,6 +44,10 @@ public class ChangeAppConditionTests extends CoreTestCase {
     public void testArticleCheckandBackgroud()
     {
 
+        if (Platform.getInstance().isMW())
+        {
+            return;
+        }
         SearchPageObject  SearchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         MainPageObject MainPageObject = new MainPageObject(driver);
